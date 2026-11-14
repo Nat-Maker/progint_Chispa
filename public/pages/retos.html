@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Itim&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles/retos.css">
+  <title>Chispa</title>
+</head>
+
+<body>
+  <!-- NAVEGACIÓN -->
+  <header>
+    <img src="/static/assets/logo.svg" alt="Logo" class="logo">
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="retos.html">Retos</a>
+      <a href="retoIA.html">Retos IA</a>
+      <a href="auth.html">Perfil</a>
+      <a href="desarrollador.html">Desarrollador</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- BIENVENIDA -->
+
+    <section class="hero">
+      <h1>Generador de retos</h1>
+
+      <p>
+        ¡Pon a prueba tu creatividad!
+        Selecciona una categoría y genera un nuevo reto.
+      </p>
+    </section>
+
+
+    <!-- GENERADOR ALEATORIO -->
+
+    <section class="generador">
+
+      <div class="seccion-titulo">
+        <h2>Crear un reto aleatorio</h2>
+
+        <p>
+          Explora nuevas ideas y descubre
+          qué puedes crear hoy.
+        </p>
+      </div>
+
+
+      <!-- SELECCIÓN DE CATEGORÍA -->
+
+      <div class="seleccion-categoria">
+
+        <label for="catSelect">Selecciona una categoría</label>
+
+        <select name="Categoria" id="catSelect">
+          <option value="">Seleccionar categoría</option>
+        </select>
+
+        <button id="sortearBtn">
+          Sortear reto
+        </button>
+
+      </div>
+
+
+      <!-- RESULTADO DEL RETO -->
+
+      <div id="reto">
+
+        <h3>Tu reto aparecerá aquí</h3>
+
+        <p>
+          Presiona el botón para descubrir
+          tu próximo desafío.
+        </p>
+
+      </div>
+
+
+      <!-- FORMULARIO PARA GUARDAR -->
+
+      <div class="guardar-reto">
+
+        <h2>Guardar reto</h2>
+
+        <p>
+          Personaliza los datos de tu reto
+          antes de guardarlo.
+        </p>
+
+        <div class="campo">
+          <label for="titulo">Título del reto</label>
+
+          <input type="text" id="titulo" placeholder="Escribe un título...">
+        </div>
+
+        <div class="campo">
+          <label for="dias">Duración (días)</label>
+
+          <input type="number" id="dias" value="3" min="1">
+        </div>
+
+        <button id="guardarBtn">
+          Guardar reto
+        </button>
+
+        <p id="mensaje"></p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <p>Chispa | Todos los derechos reservados</p>
+  </footer>
+
+  <script src="/static/js/retos.js"></script>
+
+</body>
+
+</html>

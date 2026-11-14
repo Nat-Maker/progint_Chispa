@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Itim&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles/auth.css">
+  <title>Chispa | Perfil</title>
+</head>
+
+<body>
+  <header>
+
+    <img src="/static/assets/logo.svg" alt="Chispa" class="logo">
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="retos.html">Retos</a>
+      <a href="retoIA.html">Retos IA</a>
+      <a href="auth.html">Perfil</a>
+      <a href="desarrollador.html">Desarrollador</a>
+    </nav>
+
+  </header>
+  <main>
+
+    <section id="vistaAuth" class="auth-layout">
+
+      <div class="auth-intro">
+        <h1>¡Bienvenido a Chispa!</h1>
+
+        <p>
+          Las grandes ideas comienzan con pequeños retos.
+          Inicia sesión o crea una cuenta para guardar
+          tus proyectos y continuar explorando.
+        </p>
+      </div>
+
+
+      <div class="auth-forms">
+
+        <div class="form-card">
+
+          <h2>Crear una cuenta</h2>
+
+          <p>¡Comienza tu aventura creativa!</p>
+
+          <form id="formRegistro">
+
+            <label for="regNombre">Nombre</label>
+            <input type="text" id="regNombre" placeholder="Tu nombre" required>
+
+            <label for="regCorreo">Correo electrónico</label>
+            <input type="email" id="regCorreo" placeholder="correo@ejemplo.com" required>
+
+            <label for="regContra">Contraseña</label>
+            <input type="password" id="regContra" placeholder="Crea una contraseña" required>
+
+            <button type="submit">
+              Registrarme
+            </button>
+
+          </form>
+
+        </div>
+        <div class="form-card">
+
+          <h2>Iniciar sesión</h2>
+
+          <p>¡Qué bueno tenerte de vuelta!</p>
+
+          <form id="formLogin">
+
+            <label for="logCorreo">Correo electrónico</label>
+            <input type="email" id="logCorreo" placeholder="Tu correo" required>
+
+            <label for="logContra">Contraseña</label>
+            <input type="password" id="logContra" placeholder="Tu contraseña" required>
+
+            <button type="submit">
+              Entrar
+            </button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <section id="vistaPerfil" class="perfil-layout" hidden>
+
+      <div class="perfil-header">
+
+        <div>
+          <h1>Mi espacio creativo</h1>
+
+          <p>
+            Aquí encontrarás todos tus retos
+            y proyectos guardados.
+          </p>
+        </div>
+
+        <button id="logoutBtn" class="btn-secundario">
+          Cerrar sesión
+        </button>
+
+      </div>
+      <div class="mis-retos">
+
+        <h2>Mis retos</h2>
+
+        <div id="misRetos">
+        </div>
+
+      </div>
+
+    </section>
+    <p id="mensaje"></p>
+
+  </main>
+
+  <footer>
+    <p>Chispa | Todos los derechos reservados</p>
+  </footer>
+
+  <script src="/static/js/perfil.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,307 @@
+/* FUENTES */
+.ubuntu-sans {
+  font-family: "Ubuntu Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100 800;
+  font-style: normal;
+}
+
+.itim-regular {
+  font-family: "Itim", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* root */
+:root {
+  /* COLORES */
+  --fondo: #b7b4af;
+  --texto: #0a0a0a;
+  --boton-principal: #3e2e52;
+  --boton-secundario: #27213b;
+  --accent: #8851a0;
+  --sombra: 1px 1px 10px rgba(0, 0, 0, 0.1);
+  --blanco: #f5e5d3;
+
+  /* FUENTES */
+  --fuente-principal: "itim", cursive;
+  --fuente-secundaria: "ubuntu-sans", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ESTILOS GENERALES */
+body {
+  background-color: var(--fondo);
+  color: var(--texto);
+  padding: 0;
+}
+
+img {
+  max-width: 5%;
+  height: auto;
+}
+
+/* Navegacion */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 8%;
+  border-bottom: 2px solid rgba(33, 22, 13, 0.08);
+}
+
+header h2 {
+  font-family: var(--fuente-principal);
+  font-size: 28px;
+}
+
+nav {
+  display: flex;
+  gap: 30px;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--texto);
+  font-family: var(--fuente-principal);
+  transition: color 0.2s;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+/* =========================
+   AUTENTICACIÓN
+========================= */
+
+.auth-layout {
+  margin: 50px auto;
+}
+
+.auth-intro {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.auth-intro h1 {
+  font-family: var(--fuente-principal);
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.auth-intro p {
+  max-width: 550px;
+  margin: auto;
+  font-family: var(--fuente-secundaria);
+}
+
+/* =========================
+   TARJETAS DE FORMULARIO
+========================= */
+
+.auth-forms {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 30px;
+  border-radius: 28px;
+}
+
+.form-card {
+  background-color: var(--boton-principal);
+  color: var(--blanco);
+  padding: 35px;
+  border-radius: 20px;
+  transition: transform 0.2s ease;
+}
+
+.form-card:hover {
+  transform: translateY(-3px);
+}
+
+.form-card h2 {
+  margin-bottom: 5px;
+}
+
+.form-card > p {
+  margin-bottom: 25px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.form-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-card label {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 7px;
+  letter-spacing: 0.03em;
+}
+
+.form-card input {
+  width: 100%;
+  max-width: none;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  font-size: 15px;
+  border: 2px solid #e6dcd5;
+  border-radius: 12px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.form-card input:focus {
+  outline: none;
+  border-color: var(--boton-principal);
+  box-shadow: 0 0 0 4px
+    color-mix(in srgb, var(--boton-principal) 25%, transparent);
+}
+
+.form-card button {
+  margin-top: 5px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--blanco);
+  background-color: var(--boton-secundario);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    filter 0.15s;
+}
+
+.form-card button:hover {
+  background-color: var(--accent);
+}
+
+/* =========================
+   PERFIL
+========================= */
+
+.perfil-layout {
+  margin: 50px auto;
+}
+
+.perfil-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  padding: 35px;
+  background-color: var(--blanco);
+  border-radius: 20px;
+  box-shadow: var(--sombra);
+}
+
+.perfil-header h1 {
+  font-family: var(--fuente-principal);
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.btn-secundario {
+  background-color: var(--boton-secundario);
+  color: var(--texto);
+}
+
+.btn-secundario:hover {
+  background-color: var(--accent);
+}
+
+/* =========================
+   MIS RETOS
+========================= */
+
+.mis-retos {
+  margin-top: 35px;
+  padding: 30px;
+
+  background-color: #f5e5d3;
+  border-radius: 20px;
+}
+
+.mis-retos h2 {
+  margin-bottom: 20px;
+}
+
+#misRetos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Tarjetas generadas dinámicamente */
+#misRetos > * {
+  background-color: var(--blanco);
+  padding: 22px;
+  border-radius: 15px;
+  box-shadow: var(--sombra);
+}
+
+/* =========================
+   MENSAJES
+========================= */
+
+#mensaje {
+  text-align: center;
+  margin: 20px auto;
+  font-weight: 600;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 750px) {
+  .auth-forms {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-intro h1 {
+    font-size: 34px;
+  }
+
+  .perfil-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .perfil-header h1 {
+    font-size: 30px;
+  }
+}
+
+/* Respeta el atributo hidden */
+[hidden] {
+  display: none !important;
+}
+
+/* PIE DE PÁGINA*/
+
+footer {
+  background-color: var(--boton-secundario);
+  text-align: center;
+  padding: 25px;
+  margin-top: 60px;
+  font-size: 13px;
+}
+
+footer p {
+  color: var(--fondo);
+}

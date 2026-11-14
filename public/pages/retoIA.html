@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Itim&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles/retos.css">
+  <title>Chispa</title>
+</head>
+
+<body>
+  <!-- NAVEGACIÓN -->
+  <header>
+    <img src="/static/assets/logo.svg" alt="Logo" class="logo">
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="retos.html">Retos</a>
+      <a href="retoIA.html">Retos IA</a>
+      <a href="auth.html">Perfil</a>
+      <a href="desarrollador.html">Desarrollador</a>
+    </nav>
+  </header>
+  <main>
+
+    <section class="hero">
+      <h1>Tu creatividad, sin límites.</h1>
+
+      <p>
+        ¿Tienes alguna idea en mente?
+        Cuéntale a nuestra IA qué quieres crear
+        y deja que te proponga un nuevo reto.
+      </p>
+    </section>
+
+    <section class="generador">
+
+      <div class="seccion-titulo">
+        <h2>Crear un reto con IA</h2>
+
+        <p>
+          Describe lo que te gustaría practicar,
+          aprender o experimentar.
+        </p>
+      </div>
+
+      <div class="peticion-ia">
+
+        <label for="peticion">¿Qué te gustaría crear?</label>
+
+        <textarea id="peticion" rows="4" maxlength="300"
+          placeholder="Ej: Quiero practicar CSS, nivel fácil, con temática de videojuegos..."></textarea>
+
+        <p class="ayuda">
+          Puedes incluir una temática, nivel de dificultad
+          o cualquier idea que tengas.
+        </p>
+
+        <button id="generarBtn">
+          Generar con IA
+        </button>
+
+        <p id="mensaje"></p>
+
+      </div>
+      <div class="resultado-ia">
+
+        <div class="resultado-titulo">
+          <h2>Tu nuevo reto</h2>
+
+          <button id="copiarBtn">
+            Copiar reto
+          </button>
+        </div>
+
+        <div id="reto">
+          <h3>Tu reto aparecerá aquí</h3>
+
+          <p>
+            Escribe una idea y presiona
+            "Generar con IA" para comenzar.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer>
+    <p>Chispa | Todos los derechos reservados</p>
+  </footer>
+  <script src="/static/js/retoIA.js"></script>
+</body>
+
+</html>

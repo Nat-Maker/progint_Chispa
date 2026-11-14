@@ -10,10 +10,15 @@ const app = express();
 
 // ma pool
 var con = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "retosCreativos",
+  host: process.env.DB_HOST || "localhost",
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME || "retosCreativos",
+  ssl:
+    process.env.DB_SSL === "true"
+      ? { minVersion: "TLSv1.2", rejectUnauthorized: true }
+      : undefined,
 });
 
 const db = con.promise();
@@ -32,12 +37,19 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 
 //da use 2: sesion mas sesion que nunca
 app.use(express.json());
+app.set("trust proxy", 1);
+console.log("SESSION_SECRET definido:", !!process.env.SESSION_SECRET);
 app.use(
   session({
-    secret: "miau-miau-6-7-6-7",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { httpOnly: true, secure: false },
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 2,
+    },
   }),
 );
 
@@ -64,11 +76,6 @@ app.get("/api/categorias", function (req, res) {
     }
     res.json(rows);
   });
-});
-
-//da listen
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
 });
 
 //---PERFILES LOGIN Y TODO ESO
@@ -186,37 +193,41 @@ app.post("/api/retos", async function (req, res) {
 });
 
 app.get("/api/retos", async function (req, res) {
-  try{
+  try {
     if (!req.session.idUsu) {
-      return res.status(401).json({error: "Inicia sesion para ver tus retos pasados"});
+      return res
+        .status(401)
+        .json({ error: "Inicia sesion para ver tus retos pasados" });
     }
 
     const [retos] = await db.query(
-      'SELECT r.idReto, r.titulo, r.estado, r.fechaInicio, r.fechaFinal, c.nombre AS categoria FROM reto r JOIN categoria c ON c.idCat = r.idCat WHERE r.idUsu = ? ORDER BY r.idReto DESC', [req.session.idUsu]
+      "SELECT r.idReto, r.titulo, r.estado, r.fechaInicio, r.fechaFinal, c.nombre AS categoria FROM reto r JOIN categoria c ON c.idCat = r.idCat WHERE r.idUsu = ? ORDER BY r.idReto DESC",
+      [req.session.idUsu],
     );
 
-    if(retos.length === 0){
+    if (retos.length === 0) {
       return res.json([]);
     }
 
     const ids = retos.map((r) => r.idReto);
-    const [elementos] = await db.query(`SELECT re.idReto, e.tipoElemento, re.contSelect, re.block
+    const [elementos] = await db.query(
+      `SELECT re.idReto, e.tipoElemento, re.contSelect, re.block
        FROM reto_elemento re
        JOIN elemento e ON e.idElem = re.idElem
        WHERE re.idReto IN (?)`,
-      [ids]
+      [ids],
     );
 
     for (const reto of retos) {
-      reto.elementos = elementos.filter((el) => el.idReto === reto.idReto)
+      reto.elementos = elementos.filter((el) => el.idReto === reto.idReto);
     }
 
     res.json(retos);
-  } catch(err){
+  } catch (err) {
     console.error(err);
-    res.status(500).json({error: "Error en el servidor"});
+    res.status(500).json({ error: "Error en el servidor" });
   }
-}); 
+});
 
 //-----LOGOUT
 app.post("/api/auth/logout", function (req, res) {
@@ -231,7 +242,14 @@ app.post("/api/auth/logout", function (req, res) {
 });
 
 //--- RETOS DE IAAAAAAA
-const TIPOS = ["Tema", "Paginas", "Restricciones", "Lenguaje", "Paleta", "Dificultad"];
+const TIPOS = [
+  "Tema",
+  "Paginas",
+  "Restricciones",
+  "Lenguaje",
+  "Paleta",
+  "Dificultad",
+];
 
 app.post("/api/retos/ia", async function (req, res) {
   try {
@@ -241,7 +259,9 @@ app.post("/api/retos/ia", async function (req, res) {
 
     const { peticion } = req.body;
     if (!peticion || typeof peticion !== "string" || peticion.length > 300) {
-      return res.status(400).json({ error: "Escribe qué reto quieres (máximo 300 caracteres)" });
+      return res
+        .status(400)
+        .json({ error: "Escribe qué reto quieres (máximo 300 caracteres)" });
     }
 
     const instrucciones = `Eres un generador de retos creativos para practicar programación y diseño web.
@@ -261,18 +281,20 @@ Responde en español. No agregues texto fuera del JSON.`;
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-goog-api-key": process.env.GEMINI_API_KEY
+          "x-goog-api-key": process.env.GEMINI_API_KEY,
         },
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: instrucciones }] },
           contents: [{ parts: [{ text: peticion }] }],
-          generationConfig: { responseMimeType: "application/json" }
-        })
-      }
+          generationConfig: { responseMimeType: "application/json" },
+        }),
+      },
     );
 
     if (response.status === 429 || response.status === 503) {
-      return res.status(503).json({ error: "La IA está ocupada, intenta de nuevo en un momento" });
+      return res
+        .status(503)
+        .json({ error: "La IA está ocupada, intenta de nuevo en un momento" });
     }
     if (!response.ok) {
       console.error(response.status, await response.text());
@@ -286,7 +308,9 @@ Responde en español. No agregues texto fuera del JSON.`;
     try {
       reto = JSON.parse(texto);
     } catch {
-      return res.status(502).json({ error: "La IA respondió algo inválido, intenta de nuevo" });
+      return res
+        .status(502)
+        .json({ error: "La IA respondió algo inválido, intenta de nuevo" });
     }
 
     // validar: solo tipos conocidos, textos cortos, paleta con formato correcto
@@ -297,11 +321,16 @@ Responde en español. No agregues texto fuera del JSON.`;
         limpio[tipo] = valor.trim();
       }
     }
-    if (limpio.Paleta && !/^#[0-9A-Fa-f]{6}(,#[0-9A-Fa-f]{6})*$/.test(limpio.Paleta)) {
+    if (
+      limpio.Paleta &&
+      !/^#[0-9A-Fa-f]{6}(,#[0-9A-Fa-f]{6})*$/.test(limpio.Paleta)
+    ) {
       delete limpio.Paleta;
     }
     if (Object.keys(limpio).length === 0) {
-      return res.status(502).json({ error: "La IA no devolvió un reto válido" });
+      return res
+        .status(502)
+        .json({ error: "La IA no devolvió un reto válido" });
     }
 
     res.json(limpio);
@@ -309,4 +338,9 @@ Responde en español. No agregues texto fuera del JSON.`;
     console.error(err);
     res.status(500).json({ error: "Error en el servidor" });
   }
+});
+
+//DA LISTEN
+app.listen(process.env.PORT || 3000, () => {
+  console.log("Server is running");
 });
